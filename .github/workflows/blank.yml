@@ -35,8 +35,8 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
           
-      - name: Run a docker build
-        run: docker build -t harish . 
+ #     - name: Run a docker build
+ #       run: docker build -t harish . 
        
   deploy:
     name: Deploy
