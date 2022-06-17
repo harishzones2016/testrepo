@@ -60,6 +60,8 @@ jobs:
         ECR_REGISTRY: 491668158195.dkr.ecr.ap-south-1.amazonaws.com
         ECR_REPOSITORY: harish-repo
         IMAGE_TAG: ${{ github.sha }}
+        ECS_CLUSTER: amagiconnect-ecs-cluster-dev
+        SERVICE_NAME: amagiconnect-analytics
         REGION: ap-south-1
       run: |
         # Build a docker container and
