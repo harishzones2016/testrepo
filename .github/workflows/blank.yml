@@ -67,4 +67,22 @@ jobs:
         # be deployed to ECS.
         docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"    
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+    - name: Download task definition
+      run: |
+          aws ecs describe-task-definition --task-definition sample-fargate:1 \
+          --query taskDefinition > dev.json
+       
+    - name: Fill in the new image ID in the Amazon ECS task definition for amagi-connect-analytics-api-dev container
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: dev.json
+        container-name: amagiconnect-analytics
+        image: ${{ steps.build-image.outputs.image }}
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: amagiconnect-analytics
+        cluster: amagiconnect-ecs-cluster-dev    
