@@ -36,4 +36,28 @@ jobs:
           echo test, and deploy your project.
           
       - name: Run a docker build
-        run: docker build -t harish .    
+        run: docker build -t harish . 
+       
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+#We used IAM user ECR-ECS-Test-access Access and Secret Key
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: 491668158195.dkr.ecr.ap-south-1.amazonaws.com
+        ECR_REPOSITORY: harish-repo
+        IMAGE_TAG: ${{ github.sha }}
+        REGION: ap-south-1   
