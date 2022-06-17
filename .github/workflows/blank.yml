@@ -44,7 +44,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-#We used IAM user ECR-ECS-Test-access Access and Secret Key
+ 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -60,4 +60,11 @@ jobs:
         ECR_REGISTRY: 491668158195.dkr.ecr.ap-south-1.amazonaws.com
         ECR_REPOSITORY: harish-repo
         IMAGE_TAG: ${{ github.sha }}
-        REGION: ap-south-1   
+        REGION: ap-south-1
+      run: |
+        # Build a docker container and
+        # push it to ECR so that it can
+        # be deployed to ECS.
+        docker build -f Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"    
