@@ -1,3 +1,3 @@
 From nginx
-RUN echo "MAA" > /usr/share/nginx/html/index.html
+RUN echo "MAACHUTANKU" > /usr/share/nginx/html/index.html
 EXPOSE 80
