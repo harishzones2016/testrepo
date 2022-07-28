@@ -60,8 +60,8 @@ jobs:
         ECR_REGISTRY: 491668158195.dkr.ecr.ap-south-1.amazonaws.com
         ECR_REPOSITORY: harish-repo
         IMAGE_TAG: ${{ github.sha }}
-        ECS_CLUSTER: maa
-        SERVICE_NAME: fargate-service1
+        ECS_CLUSTER: maa-cluster
+        SERVICE_NAME: nginx-service
         REGION: ap-south-1
       run: |
         # Build a docker container and
@@ -72,7 +72,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
     - name: Download task definition
       run: |
-          aws ecs describe-task-definition --task-definition maa-fargate:6 \
+          aws ecs describe-task-definition --task-definition maanginx:1 \
           --query taskDefinition > dev.json
        
     - name: Fill in the new image ID in the Amazon ECS task definition for amagi-connect-analytics-api-dev container
@@ -80,11 +80,11 @@ jobs:
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
         task-definition: dev.json
-        container-name: nginx-app
+        container-name: maa
         image: ${{ steps.build-image.outputs.image }}
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: fargate-service1
-        cluster: maa    
+        service: nginx-service
+        cluster: maa-cluster    
