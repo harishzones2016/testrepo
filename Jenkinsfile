@@ -22,5 +22,11 @@ pipeline {
                 }
             }
         }
+stage ('RUN pod on cluster') {
+                    steps {
+      sh 'ssh -o StrictHostKeyChecking=no root@192.168.1.109 "kubectl create -f maa.yaml" '
+      sh 'ssh -o StrictHostKeyChecking=no root@192.168.1.109 "kubectl create -f svc.yaml" '
+}}
+
 }
 }

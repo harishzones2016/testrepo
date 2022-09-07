@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: maa
+  name: maa
+spec:
+  containers:
+  - image: harishnarang2018/kopalnginx:latest
+    name: maa
+
