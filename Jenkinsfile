@@ -1,31 +1,26 @@
 pipeline {
+    environment {
+        registry = "harishnarang2018/kopal"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
     agent any
     stages {
-
-
-         stage('CHECKOUT') {
+        stage('Building our image') {
             steps {
-              git url: 'https://github.com/harishzones2016/testrepo.git', branch :'main'
+                script {
+                    dockerImage = docker.build registry + "nginx:latest"
+                }
             }
         }
-
-
-           stage('kubernetescheck') {
+        stage('Deploy our image') {
             steps {
-            sh 'kubectl get nodes -o wide'                        }
-
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
         }
-            stage('test') {
-            steps {
-             sh ' kubectl create -f nginxser.yaml '
-            }
-}
-
-          stage('get pods') {
-            steps {
-                sh ' kubectl get pods -o wide  '
-            }
-
-    }
 }
 }
