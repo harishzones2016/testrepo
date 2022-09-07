@@ -1,17 +1,27 @@
-node {
-stage ('scm checkoutb'){
+pipeline {
+    environment {
+        registry = "505342526165.dkr.ecr.ap-south-1.amazonaws.com/maa"
 
-git branch: 'main', url: 'https://github.com/harishzones2016/testrepo.git'
-
-}
-
-stage ('docker build image') {
-    sh 'docker build -t harishnarang2018/ubuntu:latest .'
-}
-
-stage ('docker push image') {
-   sh 'docker login -u harishnarang2018 -p Negro@1234'
-   sh 'docker push harishnarang2018/ubuntu:latest'
     }
+    agent any
+    stages {
+        stage('Building our image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy our image') {
+            steps {
+                script {
+                sh " aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 505342526165.dkr.ecr.ap-south-1.amazonaws.com"
+                 docker.withRegistry( '',   )
 
-}
+                                 {
+                        dockerImage.push()
+                    }
+
+                    }
+
+                }
