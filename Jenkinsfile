@@ -1,30 +1,22 @@
-pipeline {
-    environment {
-        registry = "505342526165.dkr.ecr.ap-south-1.amazonaws.com/maa"
+node {
+stage ('scm checkoutb'){
 
-    }
-    agent any
-    stages {
-        stage('Building our image') {
-            steps {
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
-        stage('Deploy our image') {
-            steps {
-                script {
-                sh " aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 505342526165.dkr.ecr.ap-south-1.amazonaws.com"
-                 docker.withRegistry( '',   )
+git branch: 'main', url: 'https://github.com/harishzones2016/testrepo.git'
 
-                                 {
-                        dockerImage.push()
-                    }
-
-                    }
-
-                }
 }
+
+stage ('docker build image') {
+    sh 'docker build -t harishnarang2018/kopal:latest .'
+}
+
+stage('Push Docker Image'){
+     withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
+        sh "docker login -u harishnarang2018 -p ${dockerHubPwd}"
+     }
+     sh 'docker push harishnarang2018/kopal:latest'
+   }
+
+stage ('run container on dev') {
+sh 'ssh -o StrictHostKeyChecking=no root@192.168.1.233 "sudo docker run -p 8080:80 -d --name harish harishnarang2018/kopal:latest" '
 }
 }
