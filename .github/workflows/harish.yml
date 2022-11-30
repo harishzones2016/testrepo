@@ -60,7 +60,7 @@ jobs:
         ECR_REGISTRY: 738903614005.dkr.ecr.ap-south-1.amazonaws.com
         ECR_REPOSITORY: harish-repo
         IMAGE_TAG: ${{ github.sha }}
-        ECS_CLUSTER: maa
+        ECS_CLUSTER: maa1
         SERVICE_NAME: fargate-service1
         REGION: ap-south-1
       run: |
@@ -72,7 +72,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
     - name: Download task definition
       run: |
-          aws ecs describe-task-definition --task-definition maa-fargate:1 \
+          aws ecs describe-task-definition --task-definition maa-fargate:4 \
           --query taskDefinition > dev.json
        
     - name: Fill in the new image ID in the Amazon ECS task definition for amagi-connect-analytics-api-dev container
@@ -87,4 +87,4 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: fargate-service1
-        cluster: maa    
+        cluster: maa1    
