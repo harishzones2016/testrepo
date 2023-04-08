@@ -10,5 +10,5 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app: blue-deployment
+    app: green-deployment
   type: NodePort
