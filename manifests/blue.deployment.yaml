@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blue-deployment
+  name: blue-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blue-deployment
+  template:
+    metadata:
+      labels:
+        app: blue-deployment
+    spec:
+      containers:
+      - image: adamtravis/rollouts:blue
+        name: rollouts
