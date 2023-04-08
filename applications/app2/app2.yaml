@@ -11,11 +11,11 @@ spec:
   source:
     repoURL: https://github.com/harishzones2016/testrepo.git
     targetRevision: HEAD
-    path: ./manifests/bluegreen
+    path: ./manifests/redorange
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: bluegreen
+    namespace: redorange
 
   syncPolicy:
     syncOptions:
