@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/harishzones2016/testrepo.git
     targetRevision: HEAD
-    path: ./manifests/
+    path: ./manifests/bluegreen
 
   destination:
     server: https://kubernetes.default.svc
