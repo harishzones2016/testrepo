@@ -1,0 +1,10 @@
+name: nginx
+deployment:
+  image: nginx
+  tag: 1.0.0
+  containerPort: 80
+replicaCount: 1
+
+service:
+  type: NodePort
+  port: 80
