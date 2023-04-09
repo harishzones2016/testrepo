@@ -1,0 +1,10 @@
+apiVersion: v2
+name: nginx-umbrela
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+dependencies:
+- name: nginx
+  version: 13.2.33 
+  repository: https://charts.bitnami.com/bitnami 
+
