@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: my-service
+  namespace: argocd
+spec:
+  destination:
+    namespace: modi
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+  project: default
+  source:
+    path: helmcharts/harish
+    repoURL: https://github.com/harishzones2016/testrepo.git
+    targetRevision: HEAD
+    helm:
+      values: |
+        deployment:
+          image: httpd 
