@@ -3,7 +3,7 @@ deployment:
   image: nginx
   tag: 1.0.0
   containerPort: 80
-replicaCount: 1
+replicaCount: 2
 
 service:
   type: NodePort
