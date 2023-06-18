@@ -23,7 +23,7 @@ jobs:
  #     run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
     - name: docker login
       run: | # log into docker hub account
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD  
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u $DOCKER_USER --password-stdin 
     - name: Get current date # get the date of the build
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d--%M-%S')"
