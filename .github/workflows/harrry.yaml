@@ -69,7 +69,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
     - name: Download task definition
       run: |
-          aws ecs describe-task-definition --task-definition dog-fargate:1 \
+          aws ecs describe-task-definition --task-definition dog-fargate:3 \
           --query taskDefinition > dev.json
        
     - name: Fill in the new image ID in the Amazon ECS task definition for amagi-connect-analytics-api-dev container
