@@ -19,4 +19,4 @@ jobs:
       - name: Deploy Manifest
         uses: actions-hub/kubectl@master
         with:
-          args: apply -f your-manifest.yml
+          args: apply -f nginxser.yaml
