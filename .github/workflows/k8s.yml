@@ -18,6 +18,6 @@ jobs:
 
      - name: Run a multi-line script
         run: |
-          echo kubectl apply,
+          echo kubectl
           kubectl apply -f nginxser.yaml
            
