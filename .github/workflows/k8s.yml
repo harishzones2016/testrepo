@@ -19,9 +19,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Create kubeconfig
         run: |
-        mkdir ${HOME}/.kube
-        echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-        cat ${HOME}/.kube/config  
+          mkdir ${HOME}/.kube
+          echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+          cat ${HOME}/.kube/config  
 
       - name: Run a multi-line script
         run: |
