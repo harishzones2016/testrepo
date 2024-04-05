@@ -1,10 +1,11 @@
 name: Kubernetes Deploy
+
 on:
+  workflow_dispatch:
 #  push:
 #    branches: [ "main" ]
 #  pull_request:
 #    branches: [ "main" ]
-  workflow_dispatch:
 
 env:
   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
@@ -17,8 +18,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-     - name: Run a multi-line script
+      - name: Run a multi-line script
         run: |
           echo kubectl
           kubectl apply -f nginxser.yaml
+
            
