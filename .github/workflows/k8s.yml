@@ -21,11 +21,12 @@ jobs:
         run: |
           echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/tmp/config
           export KUBECONFIG=${HOME}/tmp/config  # Corrected path
-
-      - name: Run a multi-line script
-        run: |
-          echo kubectl
           kubectl apply -f nginxser.yaml
+
+#      - name: Run a multi-line script
+#        run: |
+#          echo kubectl
+#          kubectl apply -f nginxser.yaml
 
 
            
