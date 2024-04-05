@@ -1,9 +1,10 @@
 name: Kubernetes Deploy
 
-on:
-  push:
-    branches:
-      - main
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+  workflow_dispatch:
 
 env:
   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
