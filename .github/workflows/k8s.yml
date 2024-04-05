@@ -16,7 +16,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Deploy Manifest
-        uses: actions-hub/kubectl@master
-        with:
-          args: apply -f nginxser.yaml
+     - name: Run a multi-line script
+        run: |
+          echo kubectl apply,
+          kubectl apply -f nginxser.yaml
+           
