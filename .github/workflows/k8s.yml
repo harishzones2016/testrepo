@@ -30,8 +30,8 @@ jobs:
       - name: Run a multi-line script
         run: |
           kubectl create secret generic harishsecret \
-          --from-literal=${{ secrets.harish1 }} \
-          --from-literal=${{ secrets.harish2 }} \
+          --from-literal=harish1=${{ secrets.harish1 }} \
+          --from-literal=harish2=${{ secrets.harish2 }} \
           --dry-run=client -o yaml |kubectl apply -f -    
          
       - name: Run a multi-line script
