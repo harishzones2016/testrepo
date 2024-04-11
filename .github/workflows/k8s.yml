@@ -48,8 +48,7 @@ jobs:
         env:
           NAMESPACE: ${{ var.NAMESPACE }}
           IMAGE: ${{ var.IMAGE }} 
-          
-	
+      
       - name : Display
         run: |
           cat deployment.yaml    
