@@ -42,8 +42,8 @@ jobs:
       - name: Replace tokens
         uses: cschleiden/replace-tokens@v1.3
         with:
-          tokenPrefix: '_{'
-          tokenSuffix: '}_'
+          tokenPrefix: '_{_'
+          tokenSuffix: '_}_'
           files: '["deployment.yaml"]'
         env:
           NAMESPACE: ${{ vars.NAMESPACE }}
