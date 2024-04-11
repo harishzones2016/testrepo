@@ -19,6 +19,9 @@ spec:
       containers:
       - name: hello-whale-container
         image: nginx
+        envFrom:
+        - secretRef:
+            name: harishsecret 
         imagePullPolicy: Always
         ports:
         - containerPort: 80
