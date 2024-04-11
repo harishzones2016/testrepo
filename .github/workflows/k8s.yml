@@ -46,8 +46,8 @@ jobs:
           tokenSuffix: '}_'
           files: '["deployment.yaml"]'
         env:
-          NAMESPACE: ${{ var.NAMESPACE }}
-          IMAGE: ${{ var.IMAGE }} 
+          NAMESPACE: ${{ vars.NAMESPACE }}
+          IMAGE: ${{ vars.IMAGE }} 
       
       - name : Display
         run: |
