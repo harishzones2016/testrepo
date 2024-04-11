@@ -22,16 +22,16 @@ jobs:
         with:
           version: 'v1.24.0' # default is latest stable
         id: install  
-      - name: Create kubeconfig
+      - name: Kubernetes Set Context
+        uses: Azure/k8s-set-context@v3.0
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+         
+      - name: Run a multi-line script
         run: |
-          echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/tmp/config
-          export KUBECONFIG=${HOME}/tmp/config  # Corrected path
+          echo kubectl
           kubectl apply -f nginxser.yaml
-
-#      - name: Run a multi-line script
-#        run: |
-#          echo kubectl
-#          kubectl apply -f nginxser.yaml
 
 
            
