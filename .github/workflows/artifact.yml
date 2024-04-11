@@ -39,4 +39,4 @@ jobs:
       run: |
         # Deploy your artifact
         echo "Deploying artifact..."
-        cat my-artifact.txt
+        cat ./my-artifact.txt
