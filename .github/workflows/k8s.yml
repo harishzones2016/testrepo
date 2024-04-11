@@ -29,7 +29,7 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Run a multi-line script
         run: |
-          kubectl create secret generic harish \
+          kubectl create secret generic harishsecret \
           --from-literal=${{ secrets.harish1 }} \
           --from-literal=${{ secrets.harish2 }} \
           --dry-run=client -o yaml |kubectl apply -f -    
@@ -37,7 +37,7 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo kubectl
-          kubectl delete -f nginxser.yaml
+          kubectl apply -f nginxser.yaml
 
 
            
