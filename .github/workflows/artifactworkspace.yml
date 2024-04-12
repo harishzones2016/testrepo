@@ -1,4 +1,4 @@
-name: Artifact example
+name: artifactworkspace
 
 on: 
   workflow_dispatch:
