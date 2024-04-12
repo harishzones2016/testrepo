@@ -1,0 +1,41 @@
+name: Artifact example
+
+on: 
+  workflow_dispatch:
+jobs:
+  build:
+    name: Artifact example
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build artifact
+      run: |
+        # Build your artifact
+        echo "Building artifact..."
+        mkdir -p ${{ github.workspace }}/artifact
+        echo "Hello, artifact!" > ${{ github.workspace }}/artifact/world.txt
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: ${{ github.workspace }}/artifact/**/*
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: my-artifact
+        
+
+    - name: Deploy artifact
+      run: |
+        # Deploy your artifact
+        echo "Deploying artifact..."
+        cat ${{ github.workspace }}/artifact/world.txt
