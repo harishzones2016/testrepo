@@ -36,8 +36,8 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: 736658999663.dkr.ecr.ap-south-1.amazonaws.com
-        ECR_REPOSITORY: harish-repo
+        ECR_REGISTRY: 905418309425.dkr.ecr.ap-south-1.amazonaws.com
+        ECR_REPOSITORY: flask-app
         IMAGE_TAG: ${{ github.sha }}
         REGION: ap-south-1
       run: |
