@@ -15,7 +15,7 @@ jobs:
       run: |
         # Build your artifact
         echo "Building artifact..."
-        mkdir -p path/to/artifact
+        mkdir -p harish/artifact
         echo "Hello, artifact!" > my-artifact.txt
 
     - name: Upload artifact
