@@ -31,7 +31,7 @@ jobs:
       - name: Run a multi-line script
         run: |
            kubectl config get-contexts
-           kubectl version --short
+           kubectl version
            kubectl create secret generic harishsecret \
            --from-literal=harish1=${{ secrets.harish1 }} \
            --from-literal=harish2=${{ secrets.harish2 }} \
