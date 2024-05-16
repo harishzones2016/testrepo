@@ -39,4 +39,18 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo kubectl
-          kubectl apply -f nginxser.yaml     
+          kubectl apply -f nginxser.yaml
+      - name: Replace tokens
+        uses: cschleiden/replace-tokens@v1.3
+        with:
+          tokenPrefix: '_{_'
+          tokenSuffix: '_}_'
+          files: '["replacedeployment.yaml","replaceservice.yaml"]'
+        env:
+          NAMESPACE: ${{ vars.NAMESPACE }}
+          IMAGE: ${{ vars.IMAGE }} 
+      
+      - name : Display
+        run: |
+          cat replacedeployment.yaml
+          cat replaceservice.yaml     
