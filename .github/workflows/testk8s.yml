@@ -1,0 +1,32 @@
+name: Kubernetes Deploy
+
+on:
+  workflow_dispatch:
+#  push:
+#    branches: [ "main" ]
+#  pull_request:
+#    branches: [ "main" ]
+
+#env:
+#  KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v2.0
+        with:
+          version: 'v1.24.0' # default is latest stable
+        id: install  
+      - name: Kubernetes Set Context
+        uses: Azure/k8s-set-context@v3.0
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+       - name: Run a multi-line script
+        run: |
+           kubectl config get-contexts    
