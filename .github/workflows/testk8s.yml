@@ -29,4 +29,9 @@ jobs:
           kubeconfig: ${{ secrets.KUBECONFIG }}
       - name: Run a multi-line script
         run: |
-           kubectl config get-contexts    
+           kubectl config get-contexts
+           kubectl version --short
+           kubectl create secret generic harishsecret \
+          --from-literal=harish1=${{ secrets.harish1 }} \
+          --from-literal=harish2=${{ secrets.harish2 }} \
+          --dry-run=client -o yaml |kubectl apply -f -     
