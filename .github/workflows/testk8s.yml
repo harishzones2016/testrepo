@@ -48,7 +48,8 @@ jobs:
           files: '["replacedeployment.yaml","replaceservice.yaml"]'
         env:
           NAMESPACE: ${{ vars.NAMESPACE }}
-          IMAGE: ${{ vars.IMAGE }} 
+          IMAGE: ${{ vars.IMAGE }}
+          REPLICAS: ${{ vars.REPLICAS }} 
       
       - name : Display
         run: |
