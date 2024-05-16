@@ -27,6 +27,6 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
-       - name: Run a multi-line script
+      - name: Run a multi-line script
         run: |
            kubectl config get-contexts    
