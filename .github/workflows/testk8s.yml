@@ -27,9 +27,9 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
-          context: kind-kindcluster
       - name: Run a multi-line script
         run: |
+           aws eks --region ap-south-1 update-kubeconfig --name demo
            kubectl config get-contexts
            kubectl version
            kubectl create secret generic harishsecret \
