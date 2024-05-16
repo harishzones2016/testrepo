@@ -60,4 +60,9 @@ jobs:
       - name : Display
         run: |
           cat replacedeployment.yaml
-          cat replaceservice.yaml     
+          cat replaceservice.yaml
+          - name : Display
+        run: |
+          cat replacedeployment.yaml
+          cat replaceservice.yaml   		  
+          kubectl apply -f replacedeployment.yaml -f replaceservice.yaml     
