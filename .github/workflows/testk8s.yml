@@ -27,6 +27,7 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.KUBECONFIG }}
+          context: kind-kindcluster
       - name: Run a multi-line script
         run: |
            kubectl config get-contexts
