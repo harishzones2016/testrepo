@@ -1,4 +1,4 @@
-name: Kubernetes Deploy
+name: Kubernetes Test
 
 on:
   workflow_dispatch:
