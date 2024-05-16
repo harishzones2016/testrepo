@@ -41,7 +41,7 @@ jobs:
           echo kubectl
           kubectl apply -f nginxser.yaml
       - name: Replace tokens
-        uses: cschleiden/replace-tokens@v1.3
+        uses: cschleiden/replace-tokens@v1
         with:
           tokenPrefix: '_{_'
           tokenSuffix: '_}_'
