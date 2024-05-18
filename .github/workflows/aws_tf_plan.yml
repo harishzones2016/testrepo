@@ -40,7 +40,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
           aws-region: ${{ secrets.aws-region }} 
       
-       - name: Terraform Init
+      - name: Terraform Init
         id: init
         run: terraform init
       
