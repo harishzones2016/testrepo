@@ -32,14 +32,17 @@ jobs:
       - name: Terraform Init
         id: init
         run: terraform init
+        working-directory: ./AKS
       
       - name: Terraform Validate
         id: validate
         run: terraform validate
-
+        working-directory: ./AKS
+       
       - name: Terraform Plan
         id: plan
         run: terraform plan -out tfplan
+        working-directory: ./AKS
         continue-on-error: true
 
       - name: Terraform Plan Status
@@ -48,6 +51,7 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: ./AKS
 
       - name: Terraform Output
         run: terraform output
