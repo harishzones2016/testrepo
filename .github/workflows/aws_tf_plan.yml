@@ -28,7 +28,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::905418309425:role/github-oidc-role
           role-session-name: samplerolesession
-          region: ${{ inputs.region }}
+          aws-region: ${{ inputs.region }}
         
       - name: Terraform Init
         id: init
