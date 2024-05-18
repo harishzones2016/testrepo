@@ -7,11 +7,11 @@ permissions:
       contents: read
 jobs: 
   AKS-Cluster-Deployment:
-    runs-on: self-hosted
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./AKS
+    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        shell: bash
+#        working-directory: ./AKS
     steps:
       - name: Checkout
         uses: actions/checkout@v3.1.0
