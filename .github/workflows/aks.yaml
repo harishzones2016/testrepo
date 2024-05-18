@@ -26,35 +26,27 @@ jobs:
 #      - name: 'Change Directory to Terraform'
 #        run: cd terraform
   
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.1.0
+#      - name: Setup Terraform
+#        uses: hashicorp/setup-terraform@v3
+#        with:
+#          terraform_version: 1.1.0
 #       cli_config_credentials_token: ${{ secrets.TFC_TOKEN_ID }}
 
       - name: Terraform Init
         id: init
         run: terraform init
-        env:
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#        env:
+#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       
       - name: Terraform Validate
         id: validate
         run: terraform validate
-        env:
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
        
       - name: Terraform Plan
         id: plan
         run: terraform plan -out tfplan
-        env:
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         continue-on-error: true
 
       - name: Terraform Plan Status
