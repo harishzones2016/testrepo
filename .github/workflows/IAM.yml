@@ -1,0 +1,13 @@
+name: "01_IAMRoles"
+on:
+  workflow_dispatch:
+
+jobs:
+  Plan_Uat:
+    if: github.ref == 'refs/heads/dev'
+    uses: ./.github/workflows/aws_tf_plan.yml@dev
+    with:
+      path: ./IAMRoles
+#      tf_vars_file: uat.tfvars
+#      gh_environment: uat
+#    secrets:
