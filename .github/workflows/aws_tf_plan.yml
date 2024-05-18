@@ -13,13 +13,10 @@ on:
     secrets:    
       aws-region:
         required: true
-        type: string
       aws-access-key-id:
         required: true
-        type: string
       aws-secret-access-key:
         required: true
-        type: string   
 
 jobs:
   build-plan:
