@@ -5,7 +5,9 @@ on:
     branches:
       - dev
       - uat
-
+permissions:
+  id-token: write
+  contents: read
 jobs:
   terraform-dev:
     name: 'Terraform Plan and Apply for Dev'
