@@ -8,6 +8,7 @@ jobs:
     uses: ./.github/workflows/aws_tf_plan.yml
     with:
       path: ./IAMRoles
+      region: ap-south-1
 #      tf_vars_file: uat.tfvars
 #      gh_environment: uat
 #    secrets:
