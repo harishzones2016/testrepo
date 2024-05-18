@@ -14,14 +14,6 @@ terraform {
   }
 }
 
- backend "azurerm" {
-    resource_group_name  = "strgres"
-    storage_account_name = "strg4201"
-    container_name       = "strgcont4201"
-    key                  = "marks-app.tfstate"
-  }
-
-}
 provider "azurerm" {
   features {}
 }
