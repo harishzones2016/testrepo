@@ -10,6 +10,7 @@ on:
       region:
         required: true
         type: string
+    secrets:    
       aws-region:
         required: true
         type: string
