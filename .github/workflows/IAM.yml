@@ -7,7 +7,7 @@ jobs:
     if: github.ref == 'refs/heads/dev'
     uses: ./.github/workflows/aws_tf_plan.yml@dev
     with:
-      path: IAMRoles
+      path: ./IAMRoles
 #      tf_vars_file: uat.tfvars
 #      gh_environment: uat
 #    secrets:
