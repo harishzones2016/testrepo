@@ -4,8 +4,8 @@ on:
 
 jobs:
   Plan_Uat:
-    if: github.ref == 'refs/heads/dev'
-    uses: ./.github/workflows/aws_tf_plan.yml@dev
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/aws_tf_plan.yml
     with:
       path: ./IAMRoles
 #      tf_vars_file: uat.tfvars
