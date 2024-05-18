@@ -1,3 +1,10 @@
+
+provider "azurerm" {
+  features {}
+}
+
+
+
 # Define variables
 variable "resource_group_name" {
   description = "Name of the resource group"
