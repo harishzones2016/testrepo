@@ -1,0 +1,66 @@
+name: 'Terraform Plan and Apply for Multiple Environments'
+
+on:
+  push:
+    branches:
+      - dev
+      - uat
+
+jobs:
+  terraform-dev:
+    name: 'Terraform Plan and Apply for Dev'
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+        
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      - name: 'Terraform Init for Dev'
+        run: terraform init
+        working-directory: dev
+
+      - name: 'Terraform Plan for Dev'
+        run: terraform plan -out tfplan
+        working-directory: dev
+
+      - name: 'Terraform Apply for Dev'
+        if: github.ref == 'refs/heads/dev'
+        run: terraform apply -auto-approve tfplan
+        working-directory: dev
+
+  terraform-uat:
+    name: 'Terraform Plan and Apply for UAT'
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/uat'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.1.0
+        
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          
+      - name: 'Terraform Init for UAT'
+        run: terraform init
+        working-directory: uat
+
+      - name: 'Terraform Plan for UAT'
+        run: terraform plan -out tfplan
+        working-directory: uat
+
+      - name: 'Terraform Apply for UAT'
+        if: github.ref == 'refs/heads/uat'
+        run: terraform apply -auto-approve tfplan
+        working-directory: uat
