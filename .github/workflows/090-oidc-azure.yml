@@ -16,7 +16,7 @@
         contents: read
   jobs: 
     build-and-deploy:
-      runs-on: self-hosted
+      runs-on: ubuntu-latest
       steps:
         - name: 'Az CLI login'
           uses: azure/login@v2
