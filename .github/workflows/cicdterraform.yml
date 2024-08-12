@@ -1,0 +1,78 @@
+name: 2-actions-ci-cd-aks-tf
+
+on:
+  push:
+    branches: [ main ]
+    paths: .github/workflows/2-actions-ci-cd-aks-tf.yml
+  pull_request:
+    branches:  none # [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  build-deploy-aks:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REPOSITORY: houssemdocker
+      IMAGE_NAME: web-app
+      IMAGE_TAG: ${{ github.run_number }} # ${{ github.sha }}
+      AKS_RESOURCE_GROUP: rg-aks-cluster-tf-023
+      AKS_NAME: aks-cluster
+      ACR_NAME: acrforakstf023
+      TERRAFORM_VERSION: 1.1.9
+      WORKING_DIRECTORY: AKS
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        
+    steps:
+
+    - uses: actions/checkout@v2
+  
+     
+         
+
+    # Install the latest version of Terraform CLI
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: ${{ env.TERRAFORM_VERSION }}
+        
+    - name: Terraform Init
+      id: init
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      run:
+        terraform init
+  
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      id: format
+      run: terraform fmt -check
+      continue-on-error: true
+
+    - name: Terraform Plan
+      id: plan
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      run: |
+        terraform plan -no-color 
+
+    - name: Terraform Apply
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      run: terraform apply -auto-approve
+ 
