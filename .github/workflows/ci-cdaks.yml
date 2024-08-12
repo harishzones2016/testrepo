@@ -59,3 +59,7 @@ jobs:
     - name: Display
       run: |
         cat testcicd.yaml
+    - uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+          testcicd.yaml
