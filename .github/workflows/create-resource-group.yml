@@ -1,0 +1,36 @@
+name: Create Azure Resource Group
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'The environment name (e.g., dev, test, prod)'
+        required: true
+        type: string
+      location:
+        description: 'The Azure region where the resource group will be created'
+        required: true
+        type: string
+      resource_group_name:
+        description: 'The name of the Azure Resource Group'
+        required: true
+        type: string
+
+jobs:
+  create-resource-group:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create Azure Resource Group
+        run: |
+          az group create \
+            --name ${{ inputs.resource_group_name }} \
+            --location ${{ inputs.location }}
