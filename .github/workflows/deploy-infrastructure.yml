@@ -3,7 +3,7 @@ name: Deploy Infrastructure
 on:
   push:
     branches:
-      - none
+      - main
 
 jobs:
   deploy-dev:
