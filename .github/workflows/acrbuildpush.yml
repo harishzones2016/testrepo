@@ -26,8 +26,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io.azurecr.io/nginx:${{ github.run_number }} .
+        docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
 
     - name: Push Docker image
       run: |
-        docker push acr42001.azurecr.io.azurecr.io/nginx:${{ github.run_number }}
+        docker push acr42001.azurecr.io/nginx:${{ github.run_number }}
