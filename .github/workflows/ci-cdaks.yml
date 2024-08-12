@@ -10,19 +10,16 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build-deploy-aks:
     runs-on: ubuntu-latest
     env:
       DOCKER_REPOSITORY: harishnarang2018/kopal # name of Docker Hub ID
       IMAGE_NAME: nginx
       IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
-      
       CLUSTER_NAME: aks1
       RESOURSE_GROUP: tutorial
     
     steps:
-
     - name: Git Checkout
       uses: actions/checkout@v2
   
@@ -61,7 +58,6 @@ jobs:
      - name : Display
        run: |
          cat testcicd.yaml
-      
      
     
      
