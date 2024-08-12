@@ -52,7 +52,7 @@ jobs:
         --docker-server=acr42001.azurecr.io \
         --docker-username=${{ secrets.HARISH1 }} \
         --docker-password=${{ secrets.HARISH2 }} \
-        --docker-email=h.n@gmail.com --dry-run=client -o yaml |kubectl apply -f -    
+        --docker-email=h.n@gmail.com     
     
     - uses: cschleiden/replace-tokens@v1
       with:
