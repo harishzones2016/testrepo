@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main
+      - none
   workflow_dispatch:
 
 jobs:
@@ -45,6 +45,15 @@ jobs:
       with:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBECONFIG }}
+        
+    - name: Run a multi-line script
+        run: |
+          kubectl create secret docker-registry harishsecret \
+          --docker-server=acr42001.azurecr.io \
+          --docker-username=${{ secrets.HARISH1 }} \
+          --docker-password=${{ secrets.HARISH2 }} \
+          --docker-email=h.n@gmail.com
+          --dry-run=client -o yaml |kubectl apply -f -    
     
     - uses: cschleiden/replace-tokens@v1
       with:
