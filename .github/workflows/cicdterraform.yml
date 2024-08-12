@@ -21,7 +21,7 @@ jobs:
       AKS_NAME: aks-cluster
       ACR_NAME: acrforakstf023
       TERRAFORM_VERSION: 1.1.9
-      WORKING_DIRECTORY: AKS
+      WORKING_DIRECTORY: aks
     
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
