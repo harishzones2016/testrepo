@@ -1,0 +1,28 @@
+name: Deploy Infrastructure
+
+on:
+  push:
+    branches:
+      - none
+
+jobs:
+  deploy-dev:
+    uses: ./.github/workflows/create-resource-group.yml
+    with:
+      environment: dev
+      location: eastus
+      resource_group_name: rg-dev-infrastructure
+
+  deploy-test:
+    uses: ./.github/workflows/create-resource-group.yml
+    with:
+      environment: test
+      location: eastus
+      resource_group_name: rg-test-infrastructure
+
+  deploy-prod:
+    uses: ./.github/workflows/create-resource-group.yml
+    with:
+      environment: prod
+      location: eastus
+      resource_group_name: rg-prod-infrastructure
