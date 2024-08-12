@@ -9,11 +9,13 @@ resource "azurerm_kubernetes_cluster" "k8s" {
   resource_group_name = azurerm_resource_group.rg.name
   dns_prefix          = var.dns_prefix
   kubernetes_version  = var.kubernetes_version
-
   default_node_pool {
-    name       = "systempool"
-    node_count = var.node_count
-    vm_size    = "Standard_DS1_v2"
+    name       = "default"
+    node_count = 1
+    vm_size    = "Standard_D2_v2"
+    os_disk_size_gb = 30
+  }
+
   }
 
   identity {
