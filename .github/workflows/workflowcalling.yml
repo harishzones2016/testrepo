@@ -7,9 +7,10 @@ on:
 
 jobs:
   deploy:
-    uses:./.github/workflows/workflowcallexample.yml@main
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/workflowcallexample.yml
     with:
       TERRAFORM_VERSION: '1.1.9'
       path: 'aks'
-      location: 'eastus'
+       
      
