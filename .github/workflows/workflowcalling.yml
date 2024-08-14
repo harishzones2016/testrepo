@@ -1,0 +1,15 @@
+name: 'Workflow calling'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/workflowcallexample.yml@main
+    with:
+      TERRAFORM_VERSION: '1.1.9'
+      path: 'aks'
+      location: 'eastus'
+     
