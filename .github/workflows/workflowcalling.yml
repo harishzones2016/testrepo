@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/workflowcallexample.yml@main
+    uses:./.github/workflows/workflowcallexample.yml@main
     with:
       TERRAFORM_VERSION: '1.1.9'
       path: 'aks'
