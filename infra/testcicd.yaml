@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mvc-deployment
+spec:
+  selector:
+    matchLabels:
+      app: mvc
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mvc
+    spec:
+      containers:
+      - name: mvc
+        # image: demoaks0acr.azurecr.io/web-app:1.3
+        # image: houssemdocker/webapp:111
+#        image:  __DOCKER_REPOSITORY__:__IMAGE_TAG__
+#        image: __DOCKER_REPOSITORY__/__IMAGE_NAME__:__IMAGE_TAG__
+        image: __DOCKER_REPOSITORY__.azurecr.io/__IMAGE_NAME__:__IMAGE_TAG__
+        ports:
+        - containerPort: 80
+#      imagePullSecrets:
+#      - name: harishsecret  
