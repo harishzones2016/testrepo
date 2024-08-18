@@ -45,21 +45,21 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate         
-        env:
-          ARM_CLIENT_ID: ${{ secrets.WORK_CLIENT }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_USE_OIDC: true
+#        env:
+#          ARM_CLIENT_ID: ${{ secrets.WORK_CLIENT }}
+#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+#          ARM_USE_OIDC: true
        
       - name: Terraform Plan
         id: plan
         run: terraform plan
         continue-on-error: true
-        env:
-          ARM_CLIENT_ID: ${{ secrets.WORK_CLIENT }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          ARM_USE_OIDC: true
+#        env:
+#          ARM_CLIENT_ID: ${{ secrets.WORK_CLIENT }}
+#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+#          ARM_USE_OIDC: true
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
         run: exit 1
