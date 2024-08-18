@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: ACR-CICD-AKS-github
 
 on:
   push:
@@ -35,6 +35,10 @@ jobs:
       run: |
         docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
 
+    - name: Push Docker image
+      run: |
+        docker push acr42001.azurecr.io/nginx:${{ github.run_number }}     
+
     - name: Install kubectl
       uses: azure/setup-kubectl@v2.0
       with:
@@ -70,8 +74,3 @@ jobs:
     - name: Run
       run: |
         kubectl apply -f testcicd.yaml
-    
-
-    - name: Push Docker image
-      run: |
-        docker push acr42001.azurecr.io/nginx:${{ github.run_number }}
