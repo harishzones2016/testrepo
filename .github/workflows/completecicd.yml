@@ -154,7 +154,7 @@ jobs:
       with:
 #        files: `'[".testcicd.yaml"]'`
 #        files: '../testcicd.yaml'
-        files: ./testcicd.yaml
+        files: infra/testcicd.yaml
         tokenPrefix: __ # optional, default is #{
         tokenSuffix: __ # optional, default is }#
       env:
@@ -182,10 +182,10 @@ jobs:
         
     - name: Display
       run: |
-        cat ./testcicd.yaml
+        cat infra/testcicd.yaml
     - name: Run
       run: |
-        kubectl apply -f ./testcicd.yaml
+        kubectl apply -f infra/testcicd.yaml
 #    - uses: Azure/k8s-deploy@v1
 #      with:
 #        manifests: |
