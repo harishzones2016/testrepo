@@ -21,7 +21,7 @@ variable "acr_name" {
 
 
 variable "resource_group_name" {
-  default = "aks-k8s-2020"
+  
 }
 
 variable "location" {
