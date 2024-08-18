@@ -15,7 +15,7 @@ variable "kubernetes_version" {
 }
 
 variable "acr_name" {
-  default = "acrforaks2022"
+  default = "acr42001"
 }
 
 
