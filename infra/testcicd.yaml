@@ -18,7 +18,7 @@ spec:
         # image: houssemdocker/webapp:111
 #        image:  __DOCKER_REPOSITORY__:__IMAGE_TAG__
 #        image: __DOCKER_REPOSITORY__/__IMAGE_NAME__:__IMAGE_TAG__
-        image: __DOCKER_REPOSITORY__.azurecr.io/__IMAGE_NAME__:__IMAGE_TAG__
+        image: __DOCKER_REPOSITORY__/__IMAGE_NAME__:__IMAGE_TAG__
         ports:
         - containerPort: 80
 #      imagePullSecrets:
