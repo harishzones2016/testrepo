@@ -52,11 +52,16 @@ jobs:
         
     - name: Run a multi-line script
       run: |
+        if kubectl get secret harishsecret; then
+        echo "Secret harishsecret already exists. Skipping creation."
+        else
         kubectl create secret docker-registry harishsecret \
         --docker-server=acr42001.azurecr.io \
         --docker-username=${{ secrets.HARISH1 }} \
         --docker-password=${{ secrets.HARISH2 }} \
-        --docker-email=h.n@gmail.com     
+        --docker-email=h.n@gmail.com
+        fi
+     
     
     - uses: cschleiden/replace-tokens@v1
       with:
