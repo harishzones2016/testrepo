@@ -35,6 +35,17 @@ jobs:
       run: |
         docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
 
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      continue-on-error: true
+      with:
+        image-ref: 'acr42001.azurecr.io/nginx:${{ github.run_number }}'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'MEDIUM,HIGH,CRITICAL'    
+
     - name: Push Docker image
       run: |
         docker push acr42001.azurecr.io/nginx:${{ github.run_number }}     
