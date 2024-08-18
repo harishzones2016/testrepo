@@ -35,7 +35,7 @@ jobs:
   
  #   - name: Build Docker image
  #     run: |
- #       docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
+ #       docker build --file ../Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
   
  #   - name: Run Trivy vulnerability scanner
  #     uses: aquasecurity/trivy-action@master
@@ -119,7 +119,7 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
+        docker build --file ../Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
   
     - name: Run Trivy vulnerability scanner
       uses: aquasecurity/trivy-action@master
