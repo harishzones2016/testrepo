@@ -1,4 +1,4 @@
-name: 1-actions-ci-cd-aks
+name: CICD-AKS-PIPELINE-DOCKER
 on:
   push:
     branches: [ main ]
