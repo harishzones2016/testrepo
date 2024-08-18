@@ -152,8 +152,9 @@ jobs:
 
     - uses: cschleiden/replace-tokens@v1
       with:
-#        files: '["../testcicd.yaml"]'
-        files: '../testcicd.yaml'
+#        files: `'["../testcicd.yaml"]'`
+#        files: '../testcicd.yaml'
+        files: '["../testcicd.yaml"]'
         tokenPrefix: __ # optional, default is #{
         tokenSuffix: __ # optional, default is }#
       env:
