@@ -7,22 +7,16 @@ variable "dns_prefix" {
 }
 
 variable "cluster_name" {
-  default = "aks-k8s-2022"
-}
+ }
 
-variable "kubernetes_version" {
-  default = "1.21.2"
-}
 
 variable "acr_name" {
   type = string
-  default = "acr42001"
+ 
 }
-
 
 variable "resource_group_name" {
-  
-}
+  }
 
 variable "location" {
   default = "westus"
