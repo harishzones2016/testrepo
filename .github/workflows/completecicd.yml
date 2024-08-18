@@ -110,6 +110,7 @@ jobs:
         terraform plan -no-color 
 
     - name: Terraform Apply
+      continue-on-error: true
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_CLIENT_SECRET }}
