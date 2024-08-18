@@ -14,7 +14,7 @@ jobs:
   build-deploy-aks:
     runs-on: ubuntu-latest
     env:
-      DOCKER_REPOSITORY: acr42001.azurecr.io
+      DOCKER_REPOSITORY: acr42001
       IMAGE_NAME: nginx
       IMAGE_TAG: ${{ github.run_number }} # ${{ github.sha }}
       AKS_RESOURCE_GROUP: rg-aks
