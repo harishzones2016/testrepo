@@ -1,0 +1,179 @@
+name: complete-cicd
+
+on:
+  push:
+    branches: none
+    paths: .github/workflows/2-actions-ci-cd-aks-tf.yml
+  pull_request:
+    branches:  none # [ main ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  build-deploy-aks:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REPOSITORY: acr42001.azurecr.io
+      IMAGE_NAME: nginx
+      IMAGE_TAG: ${{ github.run_number }} # ${{ github.sha }}
+      AKS_RESOURCE_GROUP: rg-aks
+      AKS_NAME: aksgit
+      ACR_NAME: acr42001.azurecr.io
+      TERRAFORM_VERSION: 1.1.9
+      WORKING_DIRECTORY: infra
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.WORKING_DIRECTORY }}
+        
+    steps:
+
+    - uses: actions/checkout@v2
+  
+ #   - name: Build Docker image
+ #     run: |
+ #       docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
+  
+ #   - name: Run Trivy vulnerability scanner
+ #     uses: aquasecurity/trivy-action@master
+ #     continue-on-error: true
+ #     with:
+ #       image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}'
+ #       format: 'table'
+ #       exit-code: '1'
+ #       ignore-unfixed: true
+ #       vuln-type: 'os,library'
+ #       severity: 'MEDIUM,HIGH,CRITICAL'
+  
+     
+        
+ #   - name: Push Docker image
+ #     run: |
+ #       docker push acr42001.azurecr.io/nginx:${{ github.run_number }}
+
+    - name: Replace tokens in terraform.tfvars
+      uses: cschleiden/replace-tokens@v1.0
+      with:
+        tokenPrefix: __
+        tokenSuffix: __
+        files: infra/terraform.tfvars
+      env:
+        AKS_RESOURCE_GROUP: ${{ env.AKS_RESOURCE_GROUP }}
+        AKS_NAME: ${{ env.AKS_NAME }}
+        ACR_NAME: ${{ env.ACR_NAME }}
+        SQL_INSTANCE_NAME: sqlforaks-tf-011
+        DB_ADMIN_LOGIN: houssem
+        DB_ADMIN_PASSWORD: "@Aa123456"
+        STORAGE_NAME: storageforsql011
+    
+#    - name: Replace azurerm with local in backend.tf
+#      uses: jacobtomlinson/gha-find-replace@v2
+#      with:
+#        find: "azurerm"
+#        replace: "local"
+#        include: "infra/backend.tf"
+#        regex: true
+
+    # Install the latest version of Terraform CLI
+    - name: Install Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: ${{ env.TERRAFORM_VERSION }}
+        
+    - name: Terraform Init
+      id: init
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      run:
+        terraform init
+  
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      id: format
+      run: terraform fmt -check
+      continue-on-error: true
+
+    - name: Terraform Plan
+      id: plan
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      run: |
+        terraform plan -no-color 
+
+    - name: Terraform Apply
+      env:
+        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_CLIENT_SECRET }}
+        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      run: terraform apply -auto-approve
+
+    - name: Build Docker image
+      run: |
+        docker build --file ./Docker/Dockerfile -t acr42001.azurecr.io/nginx:${{ github.run_number }} .
+  
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      continue-on-error: true
+      with:
+        image-ref: 'docker.io/${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}'
+        format: 'table'
+        exit-code: '1'
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'MEDIUM,HIGH,CRITICAL'
+  
+     
+        
+    - name: Push Docker image
+      run: |
+        docker push acr42001.azurecr.io/nginx:${{ github.run_number }}
+  
+
+    - uses: cschleiden/replace-tokens@v1
+      with:
+        files: '["testcicd.yaml"]'
+        tokenPrefix: __ # optional, default is #{
+        tokenSuffix: __ # optional, default is }#
+      env:
+        DOCKER_REPOSITORY: ${{ env.DOCKER_REPOSITORY }}
+        IMAGE_NAME: ${{ env.IMAGE_NAME }}
+        IMAGE_TAG: ${{ env.IMAGE_TAG }}
+
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.WORK_CLIENT }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - uses: azure/aks-set-context@v3
+      with:
+       resource-group: ${{ env.AKS_RESOURCE_GROUP }}
+       cluster-name:  ${{ env.AKS_NAME }}
+
+    # Set the target AKS cluster.
+#    - uses: Azure/aks-set-context@v1
+#      with:
+#        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+#        cluster-name: ${{ env.AKS_NAME }}
+#        resource-group: ${{ env.AKS_RESOURCE_GROUP }}
+        
+    - name: Display
+      run: |
+        cat testcicd.yaml
+#    - name: Run
+#      run: |
+#        kubectl apply -f testcicd.yaml
+    - uses: Azure/k8s-deploy@v1
+      with:
+        manifests: |
+          testcicd.yaml
