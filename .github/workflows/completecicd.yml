@@ -134,7 +134,14 @@ jobs:
         severity: 'MEDIUM,HIGH,CRITICAL'
   
      
-        
+    - uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.WORK_CLIENT }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Set up Docker to use ACR credentials
+      run: |
+        az acr login --name   acr42001.azureacr.io  
     - name: Push Docker image
       run: |
         docker push acr42001.azurecr.io/nginx:${{ github.run_number }}
@@ -142,7 +149,7 @@ jobs:
 
     - uses: cschleiden/replace-tokens@v1
       with:
-        files: '["testcicd.yaml"]'
+        files: '["../testcicd.yaml"]'
         tokenPrefix: __ # optional, default is #{
         tokenSuffix: __ # optional, default is }#
       env:
@@ -170,7 +177,7 @@ jobs:
         
     - name: Display
       run: |
-        cat testcicd.yaml
+        cat ../testcicd.yaml
 #    - name: Run
 #      run: |
 #        kubectl apply -f testcicd.yaml
