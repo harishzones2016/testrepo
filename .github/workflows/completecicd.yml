@@ -19,7 +19,7 @@ jobs:
       IMAGE_TAG: ${{ github.run_number }} # ${{ github.sha }}
       AKS_RESOURCE_GROUP: rg-aks
       AKS_NAME: aksgit
-      ACR_NAME: acr42001.azurecr.io
+      ACR_NAME: acr42001
       TERRAFORM_VERSION: 1.1.9
       WORKING_DIRECTORY: infra
     
