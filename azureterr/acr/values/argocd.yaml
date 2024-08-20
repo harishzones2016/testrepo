@@ -1,0 +1,21 @@
+---
+global:
+  image:
+    tag: "v2.6.6"
+
+server:
+  extraArgs:
+    - --insecure
+  ingress:
+    enabled: true
+    ingressClassName: "nginx"  # Set to your ingress class if different
+    hosts:
+      - host: argocd.example.com  # Replace with your domain
+        paths:
+          - path: /
+            pathType: Prefix
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"  # Disable SSL redirection
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"  # Use HTTP for backend communication
+    tls: []  # No TLS configuration for HTTPS
+      

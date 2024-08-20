@@ -1,0 +1,20 @@
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: azure-kvname-system-msi
+spec:
+  provider: azure
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"    # Set to true for using managed identity
+    userAssignedIdentityID: "fd20e3a4-10c5-44c1-8203-3027a3ceb391"      # Use ClientID not principal id
+#    clientID: "d8b7e530-3758-43e3-86f1-65c48cfc2336"
+    keyvaultName: maavault420
+    cloudName: "AzurePublicCloud"                   # [OPTIONAL for Azure] if not provided, the Azure environment defaults to AzurePublicCloud
+    objects:  |
+      array:
+        - |
+          objectName: ExampleSecret
+          objectType: secret        # object types: secret, key, or cert
+          objectVersion: ""         # [OPTIONAL] object versions, default to latest if empty
+    tenantId: 71c3e719-d710-41f2-a77d-02c4ee99cf19     # The tenant ID of the key vault(Directory ID)

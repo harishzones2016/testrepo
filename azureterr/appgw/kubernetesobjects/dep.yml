@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: maa
+  name: maa
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maa
+  template:
+    metadata:
+      labels:
+        app: maa
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        env:
+        - name: HARISH
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: username
+        - name: MAA
+          valueFrom:
+            secretKeyRef:
+              name: mysecret
+              key: password

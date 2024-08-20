@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myd-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      volumeMounts:
+        - mountPath: "/mnt/disks"
+          name: my-disk
+  volumes:
+    - name: my-disk
+      persistentVolumeClaim:
+        claimName: my-pvc
+

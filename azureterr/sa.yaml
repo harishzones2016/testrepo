@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    azure.workload.identity/client-id: "349b9925-7609-4e83-9fed-41027082de9d"
+  name: my-account
+  namespace: default

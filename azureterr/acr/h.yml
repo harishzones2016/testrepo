@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: acrtest
+  name: acrtest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acrtest
+  template:
+    metadata:
+      labels:
+        app: acrtest
+#        azure.workload.identity/use: "true"
+    spec:
+#      serviceAccountName: test-service-account      
+      containers:
+      - image: acr42001.azurecr.io/nginx:latest
+        name: nginx
+#        image: nginx
+#      imagePullSecrets:
+#      - name:  my-secret        
