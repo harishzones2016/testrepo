@@ -50,7 +50,7 @@ jobs:
           resource-group: h
           dns-name-label: nginxbhai
           image: harishnarang2018/kopal:${{ github.sha }}
-          registry-login-server: docker.io
+          registry-login-server: index.docker.io
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
           name: aci-sampleapp
