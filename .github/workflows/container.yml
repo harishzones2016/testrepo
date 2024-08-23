@@ -48,7 +48,7 @@ jobs:
         uses: 'azure/aci-deploy@v1'
         with:
           resource-group: h
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+          dns-name-label: nginxbhai
           image: harishnarang2018/kopal:${{ github.sha }}
 #            registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
