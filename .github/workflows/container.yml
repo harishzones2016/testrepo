@@ -43,4 +43,4 @@ jobs:
         with:
           context: Docker
           push: true
-          tags: harishnarang2018/kopal:latest
+          tags: harishnarang2018/kopal:${{ github.sha }}
