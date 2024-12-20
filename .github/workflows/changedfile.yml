@@ -28,12 +28,12 @@ jobs:
           if [ -n "${{ github.base_ref }}" ]; then
             # For Pull Request: Compare base branch with PR head
             git fetch origin "${{ github.base_ref }}" --depth=1
-            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }} -- example/)
+            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }} -- examples/)
             echo "Diff between origin/${{ github.base_ref }} and ${{ github.event.pull_request.head.sha }}"
           else
             # For Push: Compare previous commit with the latest commit
             git fetch origin ${{ github.event.before }} --depth=1
-            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only ${{ github.event.before }} ${{ github.event.after }} -- example/)
+            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only ${{ github.event.before }} ${{ github.event.after }} -- examples/)
             echo "Diff between ${{ github.event.before }} and ${{ github.event.after }}"
           fi
           # Output changed files as a JSON array
