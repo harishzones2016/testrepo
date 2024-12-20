@@ -1,0 +1,57 @@
+name: Find Changed Files in example/ Folder
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  find-changed-files:
+    name: Find Changed Files
+    runs-on: ubuntu-latest
+    outputs:
+      changed_files: ${{ steps.get-changed-files.outputs.changed_files }}
+    steps:
+      # Step 1: Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # Step 2: Get Changed Files
+      - name: Get Changed Files in example/ Folder
+        id: get-changed-files
+        run: |
+          if [ $GITHUB_BASE_REF ]; then
+            # For Pull Request: Compare base branch with PR head
+            git fetch origin $GITHUB_BASE_REF --depth=1
+            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }} -- example/)
+            echo "Diff between origin/${{ github.base_ref }} and ${{ github.event.pull_request.head.sha }}"
+          else
+            # For Push: Compare previous commit with latest commit
+            git fetch origin ${{ github.event.before }} --depth=1
+            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only ${{ github.event.before }} ${{ github.event.after }} -- example/)
+            echo "Diff between ${{ github.event.before }} and ${{ github.event.after }}"
+          fi
+
+          # Output changed files as a JSON array
+          echo "Changed files: $CHANGED_FILES"
+          echo "changed_files=[\"$(echo $CHANGED_FILES | sed 's/ /\",\"/g')\"]" >> $GITHUB_OUTPUT
+
+      # Step 3: Debug Output
+      - name: Debug Output
+        run: echo "Changed files: ${{ steps.get-changed-files.outputs.changed_files }}"
+
+  process-changed-files:
+    name: Process Changed Files
+    needs: find-changed-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        file: ${{ fromJson(needs.find-changed-files.outputs.changed_files) }}
+    steps:
+      - name: Process File
+        run: echo "Processing file: ${{ matrix.file }}"
