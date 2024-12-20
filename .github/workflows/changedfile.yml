@@ -1,4 +1,4 @@
- name: Find Changed Files in example/ Folder
+name: Find Changed Files in example/ Folder
 
 on:
   pull_request:
