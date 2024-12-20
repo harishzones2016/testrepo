@@ -1,4 +1,4 @@
-name: Find Changed Files in example/ Folder
+ name: Find Changed Files in example/ Folder
 
 on:
   pull_request:
@@ -25,11 +25,11 @@ jobs:
       - name: Get Changed Files in example/ Folder
         id: get-changed-files
         run: |
-          if [ $GITHUB_BASE_REF ]; then
+          if [ "${GITHUB_BASE_REF}" ]; then
             # For Pull Request: Compare base branch with PR head
-            git fetch origin $GITHUB_BASE_REF --depth=1
-            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only origin/${{ github.base_ref }} ${{ github.event.pull_request.head.sha }} -- example/)
-            echo "Diff between origin/${{ github.base_ref }} and ${{ github.event.pull_request.head.sha }}"
+            git fetch origin "${GITHUB_BASE_REF}" --depth=1
+            CHANGED_FILES=$(git diff --diff-filter=ACM --name-only origin/${GITHUB_BASE_REF} ${{ github.event.pull_request.head.sha }} -- example/)
+            echo "Diff between origin/${GITHUB_BASE_REF} and ${{ github.event.pull_request.head.sha }}"
           else
             # For Push: Compare previous commit with latest commit
             git fetch origin ${{ github.event.before }} --depth=1
