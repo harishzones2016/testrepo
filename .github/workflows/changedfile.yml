@@ -38,8 +38,7 @@ jobs:
           fi
 
           # Output changed files as a JSON array
-          echo "Changed files: $CHANGED_FILES"
-          echo "::set-output name=changed_files::[\"$(echo $CHANGED_FILES | sed 's/ /\",\"/g')\"]"
+          echo "changed_files=[\"$(echo $CHANGED_FILES | sed 's/ /\",\"/g')\"]" >> $GITHUB_OUTPUT
 
       # Step 3: Debug Output
       - name: Debug Output
