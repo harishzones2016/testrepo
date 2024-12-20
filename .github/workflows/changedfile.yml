@@ -36,14 +36,12 @@ jobs:
             CHANGED_FILES=$(git diff --diff-filter=ACM --name-only ${{ github.event.before }} ${{ github.event.after }} -- example/)
             echo "Diff between ${{ github.event.before }} and ${{ github.event.after }}"
           fi
-
           # Output changed files as a JSON array
           echo "changed_files=[\"$(echo $CHANGED_FILES | sed 's/ /\",\"/g')\"]" >> $GITHUB_OUTPUT
-
       # Step 3: Debug Output
       - name: Debug Output
-        run: echo "Changed files: ${{ steps.get-changed-files.outputs.changed_files }}"
-
+        run: |
+          echo "Changed files: ${{ steps.get-changed-files.outputs.changed_files }}"
   process-changed-files:
     name: Process Changed Files
     needs: find-changed-files
@@ -53,4 +51,5 @@ jobs:
         file: ${{ fromJson(needs.find-changed-files.outputs.changed_files) }}
     steps:
       - name: Process File
-        run: echo "Processing file: ${{ matrix.file }}"
+        run: |
+          echo "Processing file: ${{ matrix.file }}"
