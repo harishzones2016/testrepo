@@ -2,7 +2,7 @@ name: AWS OIDC Connect Demo
 on:
   workflow_dispatch:
 env:
-  AWS_REGION : "ap-south-1"   
+  AWS_REGION : "us-east-1"   
 permissions:
       id-token: write   # This is required for requesting the JWT
       contents: read    # This is required for actions/checkout
@@ -16,7 +16,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::905418309425:role/github-oidc-role
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
 
